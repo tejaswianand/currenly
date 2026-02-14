@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CurrencyConverter
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.
@@ -57,3 +58,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# currenly
+Frontend web app with basic login validation and a dashboard featuring an API call counter, real-time currency converter (EUR ⇄ INR), and historical exchange rates by date. Integrates CurrencyLayer API with RxJS and follows a clean, component-based architecture.
+>>>>>>> 70309a004927ff9153118974dca07bcd48a26c6e
