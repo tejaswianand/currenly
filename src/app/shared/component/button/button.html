@@ -1,0 +1,10 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  class="btn"
+  [ngClass]="[variant, customClass]"
+  (click)="handleClick()"
+>
+  <ng-content *ngIf="!label"></ng-content>
+  <span *ngIf="label">{{ label }}</span>
+</button>

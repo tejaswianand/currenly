@@ -1,0 +1,14 @@
+<select
+  class="ui-select"
+  [(ngModel)]="value"
+  (ngModelChange)="handleChange($event)"
+  [disabled]="disabled"
+>
+  <option *ngIf="placeholder" value="" disabled>
+    {{ placeholder }}
+  </option>
+
+  <option *ngFor="let option of options" [value]="option">
+    {{ option }}
+  </option>
+</select>

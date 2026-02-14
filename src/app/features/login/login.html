@@ -1,0 +1,40 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <fa-icon [icon]="faBrand"></fa-icon>
+        </div>
+        <span class="brand-name">Currenly</span>
+      </div>
+      <h2>Welcome Back</h2>
+      <p>Please enter your credentials to continue</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <app-field-label label="Email" for="email"></app-field-label>
+        <app-input
+          id="email"
+          type="email"
+          placeholder="name@company.com"
+          controlName="email"
+        ></app-input>
+      </div>
+
+      <div class="form-group">
+        <app-field-label label="Password" for="password"></app-field-label>
+        <app-password-input placeholder="••••••••" controlName="password"></app-password-input>
+      </div>
+
+      <div class="form-actions">
+        <app-button
+          [label]="loading ? 'Signing In...' : 'Sign In'"
+          type="submit"
+          variant="primary"
+          [disabled]="loading"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</div>

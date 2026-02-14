@@ -1,0 +1,139 @@
+<div class="app-container">
+  <nav class="top-nav">
+    <div class="brand">
+      <div class="brand-icon">
+        <fa-icon [icon]="faBrand"></fa-icon>
+      </div>
+      <span class="brand-name">Currenly</span>
+    </div>
+    <app-button (clicked)="logout()" customClass="logout-btn">
+      <fa-icon [icon]="faLogout"></fa-icon>
+      <span>Logout</span>
+    </app-button>
+  </nav>
+
+  <main>
+    <div class="api-status">
+      <div class="api-count">
+        {{ apiCalls | async }}
+      </div>
+      <div class="api-label">API Calls</div>
+    </div>
+
+    <form [formGroup]="form" class="dashboard-grid">
+      <section class="card conversion-panel">
+        <div class="card-header">
+          <h2>Quick Exchange</h2>
+          <p>Real-time cross-border settlements</p>
+        </div>
+
+        <div class="card-body">
+          <div class="input-grid">
+            <div class="form-group">
+              <app-field-label label="Amount"></app-field-label>
+              <app-input type="number" controlName="amount"></app-input>
+            </div>
+
+            <div class="form-group">
+              <app-field-label label="Source"></app-field-label>
+              <app-select formControlName="fromCode" [options]="currencies"></app-select>
+            </div>
+
+            <div class="form-group">
+              <app-field-label label="Target"></app-field-label>
+              <app-select formControlName="toCode" [options]="currencies"> </app-select>
+            </div>
+          </div>
+
+          <div class="action-area">
+            <div class="result-display" *ngIf="result > 0">
+              <div class="result-value">
+                {{ result | number: '1.2-2' }}
+                <small>{{ form.value.toCode }}</small>
+              </div>
+              <div class="rate-badge">
+                {{ rateDisplay }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card history-panel">
+        <div class="card-header">
+          <h2>Historical Ledger</h2>
+          <p>Archived exchange rates</p>
+        </div>
+
+        <div class="history-controls">
+          <div class="control-group">
+            <app-field-label label="Base Currency"></app-field-label>
+            <app-select formControlName="historyBase" [options]="currencies"> </app-select>
+          </div>
+
+          <div class="control-group">
+            <app-field-label label="Date"></app-field-label>
+            <app-date-picker controlName="historyDate" [max]="maxDate"> </app-date-picker>
+          </div>
+
+          <app-button variant="secondary" label="Fetch Data" (clicked)="fetchHistory()">
+          </app-button>
+        </div>
+
+        <div class="data-view">
+          <div *ngIf="loadingHistory" class="skeleton-wrapper">
+            <div class="skeleton-row" *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8]">
+              <div class="skeleton skeleton-code"></div>
+              <div class="skeleton skeleton-rate"></div>
+            </div>
+          </div>
+
+          <div *ngIf="historyData && !loadingHistory">
+            <div class="table-controls">
+              <app-input
+                type="text"
+                controlName="search"
+                placeholder="Search currency..."
+              ></app-input>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th (click)="sortBy('currency')" class="sortable">
+                    Currency
+                    <span *ngIf="sortColumn === 'currency'">
+                      {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                    </span>
+                  </th>
+
+                  <th (click)="sortBy('rate')" class="sortable">
+                    Rate
+                    <span *ngIf="sortColumn === 'rate'">
+                      {{ sortDirection === 'asc' ? '▲' : '▼' }}
+                    </span>
+                  </th>
+
+                  <th>Base</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="let rate of filteredAndSortedHistory"
+                  [class.base-row]="rate.key === form.value.historyBase"
+                >
+                  <td class="currency-cell">{{ rate.key }}</td>
+                  <td class="rate-cell">
+                    {{ rate.value | number: '1.2-4' }}
+                  </td>
+                  <td class="base-cell">1 {{ form.value.historyBase }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </form>
+  </main>
+</div>

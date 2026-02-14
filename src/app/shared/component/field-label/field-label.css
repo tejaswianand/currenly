@@ -1,0 +1,11 @@
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #344054;
+  display: inline-block;
+}
+
+.field-label.required::after {
+  content: ' *';
+  color: #dc2626;
+}
